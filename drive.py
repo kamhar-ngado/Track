@@ -6,7 +6,10 @@ sio = socketio.Server()
 
 app = Flask(__name__)
 
+@sio.on('connect')
+def connect(sid, environ):
+    print('Connected')
+
 if __name__ == '__main__':
-    app.run(port=3000)
-    app = socketio.Midleware(sio, app)
+    app = socketio.Middleware(sio, app)
     eventlet.wsgi.server(eventlet.listen(('', 4567)), app)
